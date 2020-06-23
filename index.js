@@ -10,10 +10,31 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const Image = ImageModel.get();
 
+
+
+/**
+ * Add image to the database
+ *
+ * @[Request Object]
+ * {
+ *  url: String,
+ *  name: String,
+ *  type: String,
+ * }
+ */
 app.post("/api/image/add", (req, res) => {
   const picture = new ImageModel.resolveObject(req.body);
   console.log(picture);
-  res.send("OK");
+  
+  picture.save((err, result)=>{
+    if(err){
+      console.log(err);
+    } else {
+      res.send(JSON.stringify(result));
+    }
+
+  });
+  
 });
 
 app.listen(3000, () => {
