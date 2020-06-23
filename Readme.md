@@ -83,6 +83,28 @@
 
   `nameString` is a required parameter. `offset` and `limit` are optional parameters.
 
-### Task 2: Extracting metadata from image url
+## Task 2: Extracting metadata from image url
 
+  To facilitate meta data options, there is one optional param when passing in a `POST` request, 
+    - `size`
 
+  Taking an example URL: 
+    
+    $ curl -d "url=https://hosted.com/image.tiff&name=farmhouse&type=image/png&size=32" -X POST http://localhost:3000/api/image/add
+
+  The output will be similar to:
+
+    {
+      _id: 5ef1fc3027a7f220f00d7dc2,
+      url: 'https://hosted.com/image.tiff',
+      name: 'farmhouse',
+      type: 'image/png',
+      metadata: {
+          size: 32,
+          extType: 'tiff'
+        }
+    }
+
+  The `size` is an optional parameter and needs to be specified, while `extType` is internally calculated, by comparison with popular known image file types. If none are found, the `extType` metadata is not created. Similary for `size`, unless provided, metadata is not generated on its own.
+
+  The feature could be easily extended to house more metadata options, by scaling the `ImageModel`
