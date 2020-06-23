@@ -11,6 +11,41 @@ app.use(bodyParser.urlencoded({extended: true}));
 const Image = ImageModel.get();
 
 
+function textLike(str){
+  var escaped = str.replace(/[(\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+  return new RegExp(escaped, 'i');
+}
+
+
+/**
+ * Get Images from the database 
+ * 
+ *
+ * @[Response Object]
+ * {
+ *  _id: MongoDB Object iD,
+ *  name: String,
+ *  url: String,
+ *  type: String, 
+ * }
+ */
+app.get("/api/image/search", (req, res) =>{
+ 
+  const name = req.query.nameString;
+  const limit = req.query.limit;
+  const offset = req.query.offset;
+
+  Image.find({ name: new textLike(name) },(err, result) => {
+    if(err){
+      console.log(err);
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  }).limit(limit ? parseInt(limit) : 50).skip(offset ? parseInt(offset) : 0);
+
+});
+
 
 /**
  * Add image to the database

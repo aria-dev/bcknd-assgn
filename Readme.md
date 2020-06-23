@@ -50,7 +50,7 @@
 
     $ {"_id":"5ef1fc3027a7f2204007d5b7","__v":0}
 
-  Which is great, but, it's not the expected output. Use the following sample command to generate an Image Object:
+  Use the following sample command to generate an Image Object:
 
     $ curl -d "url=https://hostedimage.com/beach.png&name=beach.png&type=image/png" -X POST http://localhost:3000/api/image
     /add | json_pp
@@ -70,5 +70,19 @@
 ### Task 1: #2 Send a GET request
 
   Available params for GET request: `offset`, `limit`, `nameString`
+
+  URL to use: `http://localhost:3000/api/image/search`
+
+  Example url : `http://localhost:3000/api/image/search?nameString=beach&limit=2&offset=10`
+
+  Open up a new terminal while the `mongod` and `node server` are running as in the above steps
+
+  Use the following url structure to send a GET request to the server:
+
+    $ curl -X GET "http://localhost:3000/api/image/search?nameString=beach&offset=2&limit=2"
+
+  `nameString` is a required parameter. `offset` and `limit` are optional parameters.
+
+### Task 2: Extracting metadata from image url
 
 
