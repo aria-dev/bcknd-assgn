@@ -3,7 +3,7 @@
 
 ## Steps to run the project with NodeJS
 
-> Prerequisites: NodeJS, NPM, cURL
+> Prerequisites: NodeJS, NPM, cURL, MongoDB
 
 
 ### Clone the project via git clone: 
@@ -81,7 +81,11 @@
 
     $ curl -X GET "http://localhost:3000/api/image/search?nameString=beach&offset=2&limit=2"
 
-  `nameString` is a required parameter. `offset` and `limit` are optional parameters.
+  `nameString`, `offset` and `limit` are optional parameters. To get all results stored in the db:
+  
+    $ curl -X GET "http://localhost:3000/api/image/search"
+   
+   This will return upto 50 results, from the DB.
 
 ## Task 2: Extracting metadata from image url
 
