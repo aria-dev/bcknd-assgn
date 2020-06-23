@@ -3,8 +3,6 @@ const Config = require("./config/dbconfig");
 const ImageModel = require("./model/ImageObject.model");
 const bodyParser = require("body-parser");
 const app = express();
-const urlMetadata = require('url-metadata');
-
 
 
 Config.init();
