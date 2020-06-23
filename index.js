@@ -3,6 +3,9 @@ const Config = require("./config/dbconfig");
 const ImageModel = require("./model/ImageObject.model");
 const bodyParser = require("body-parser");
 const app = express();
+const urlMetadata = require('url-metadata');
+
+
 
 Config.init();
 
@@ -15,6 +18,7 @@ function textLike(str){
   var escaped = str.replace(/[(\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
   return new RegExp(escaped, 'i');
 }
+
 
 
 /**
@@ -35,7 +39,7 @@ app.get("/api/image/search", (req, res) =>{
   const limit = req.query.limit;
   const offset = req.query.offset;
 
-  Image.find({ name: new textLike(name) },(err, result) => {
+  Image.find({ name: name? new textLike(name) : ""},(err, result) => {
     if(err){
       console.log(err);
       res.send(err);
@@ -58,6 +62,7 @@ app.get("/api/image/search", (req, res) =>{
  * }
  */
 app.post("/api/image/add", (req, res) => {
+  
   const picture = new ImageModel.resolveObject(req.body);
   console.log(picture);
   
